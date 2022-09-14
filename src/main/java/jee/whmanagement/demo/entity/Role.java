@@ -10,7 +10,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table
 public class Role {
 
     @Id

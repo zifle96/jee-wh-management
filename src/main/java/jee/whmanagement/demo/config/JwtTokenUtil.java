@@ -8,15 +8,12 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.SerialException;
 import io.jsonwebtoken.security.Keys;
 import jee.whmanagement.demo.entity.Role;
-import jee.whmanagement.demo.entity.User;
-import jee.whmanagement.demo.enums.UserRoles;
-import jee.whmanagement.demo.service.impl.MyUserDetailsServiceImpl;
+import jee.whmanagement.demo.service.impl.UserDetailsImpl;
+import jee.whmanagement.demo.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +35,7 @@ public class JwtTokenUtil  {
     private long validityInMilliseconds;
 
     @Autowired
-    private MyUserDetailsServiceImpl myUserDetails;
+    private UserDetailsServiceImpl myUserDetails;
 
     @PostConstruct
     protected void init() {
@@ -50,10 +47,10 @@ public class JwtTokenUtil  {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(Long userId, String email, UserDetails userDetails) {
+    public String createToken(UserDetailsImpl userDetails) {
 
-        Claims claims = Jwts.claims().setSubject(email);
-        claims.put("userId" , userId);
+        Claims claims = Jwts.claims().setSubject(userDetails.getEmail());
+        claims.put("userId" , userDetails.getUserId());
         claims.put("roles", userDetails.getAuthorities());
 
         Date now = new Date();
@@ -68,7 +65,7 @@ public class JwtTokenUtil  {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = myUserDetails.loadUserByUsername(getEmail(token));
+        UserDetailsImpl userDetails = (UserDetailsImpl) myUserDetails.loadUserByUsername(getEmail(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 

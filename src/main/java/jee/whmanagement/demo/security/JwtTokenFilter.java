@@ -25,36 +25,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     public JwtTokenFilter(JwtTokenUtil jwtTokenUtil) {
         this.jwtTokenUtil = jwtTokenUtil;
     }
-//    @Autowired
-//    UserRepository userRepo;
-
-//    @Override
-//    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-//                                    FilterChain filterChain) throws ServletException, IOException {
-//
-//        final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-//        if (header !=null && ((header).isEmpty() || !header.startsWith("Bearer "))) {
-//            filterChain.doFilter(request, response);
-//            return;
-//        }
-//
-//        // Get jwt token and validate
-//        if (header!= null){
-//            final String token = header.split(" ")[1].trim();
-//
-//            User user = userRepo
-//                    .findByEmail(jwtTokenUtil.getEmailFromToken(token));
-//
-//            if (!jwtTokenUtil.validateToken(token, user)) {
-//                filterChain.doFilter(request, response);
-//                return;
-//            }
-//        }
-//
-//        SecurityContext.init();
-//        filterChain.doFilter(request, response);
-//
-//    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
@@ -62,11 +32,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         if (token != null && jwtTokenUtil.validateToken(token)) {
             Authentication auth = jwtTokenUtil.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
-            //SecurityContext.init();
-            //SecurityContext.set();
 
         }
-
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }
