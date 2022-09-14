@@ -4,14 +4,17 @@ package jee.whmanagement.demo.entity;
 import jee.whmanagement.demo.enums.OrderStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Set;
 
-@Data
-@EqualsAndHashCode
+@Getter
+@Setter
 @Entity
 public class Order {
 
@@ -32,7 +35,7 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "item_id"))
     private Set<Item> item;
 
-    private Date submittedDate;
-    private Date deadlineDate;
-    private Date deliveredDate;
+    private Timestamp submittedDate;
+    private Timestamp deadlineDate;
+    private Timestamp deliveredDate;
 }

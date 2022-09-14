@@ -2,14 +2,16 @@ package jee.whmanagement.demo.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@EqualsAndHashCode
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "privilege")
+@Table
 public class Privilege {
 
     @Id
@@ -18,15 +20,8 @@ public class Privilege {
 
     private String name;
 
-    @ManyToMany(mappedBy = "privileges")
-    private Set<Role> roles;
+    @ManyToOne
+    @JoinColumn(name="role_id", nullable=false)
+    private Role role;
 
-    public Privilege() {
-        super();
-    }
-
-    public Privilege(final String name) {
-        super();
-        this.name = name;
-    }
 }

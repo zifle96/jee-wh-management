@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(OrderStatus.CREATED);
         Calendar cal = Calendar.getInstance();
         java.util.Date utilDate = cal.getTime();
-        order.setSubmittedDate(new Date(utilDate.getTime()));
+        //order.setSubmittedDate(new Date(utilDate.getTime()));
 
         List<Item> itemList = new ArrayList<>();
         for (ItemRequest itemRequest : itemRequestList) {
@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
         }
         java.util.Date dt = new java.util.Date();
         LocalDateTime.from(dt.toInstant()).plusDays(2);
-        order.setDeadlineDate(new Date(dt.getTime()));
+        //order.setDeadlineDate(new Date(dt.getTime()));
 
         return orderRepository.save(order);
     }

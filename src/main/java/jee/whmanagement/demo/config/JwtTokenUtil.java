@@ -50,11 +50,11 @@ public class JwtTokenUtil  {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(Long userId, String email, Set<Role> appUserRoles) {
+    public String createToken(Long userId, String email, UserDetails userDetails) {
 
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("userId" , userId);
-        claims.put("roles", appUserRoles);
+        claims.put("roles", userDetails.getAuthorities());
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
