@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ItemRequest {
 
-    private Long id;
+    private Long itemId;
     private String name;
     private String description;
     private Integer requestedQuantity;

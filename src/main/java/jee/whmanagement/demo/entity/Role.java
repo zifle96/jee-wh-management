@@ -1,29 +1,41 @@
 package jee.whmanagement.demo.entity;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@Table(name = "role")
 @Entity
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
-    private User user;
+    @Column(name = "role_name")
+    private String roleName;
 
-    private String name;
-
-    @OneToMany(mappedBy = "role")
-    //@JoinTable(name = "roles_privileges", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "role_privilege",
+            joinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "privilege_id", referencedColumnName = "id"))
     private Set<Privilege> privilege;
 
+    @ManyToMany(mappedBy = "role")
+    private Set<User> user;
+
+    public Role(Long id, String roleName, Set<Privilege> privilege, Set<User> user) {
+        this.id = id;
+        this.roleName = roleName;
+        this.privilege = privilege;
+        this.user = user;
+    }
 }

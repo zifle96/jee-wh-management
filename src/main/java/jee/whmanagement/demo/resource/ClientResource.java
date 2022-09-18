@@ -3,6 +3,8 @@ package jee.whmanagement.demo.resource;
 import jee.whmanagement.demo.model.ItemRequest;
 import jee.whmanagement.demo.entity.Order;
 import jee.whmanagement.demo.enums.OrderStatus;
+import jee.whmanagement.demo.model.OrderDto;
+import jee.whmanagement.demo.model.OrderRequest;
 import jee.whmanagement.demo.service.OrderService;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,25 +21,26 @@ public class ClientResource {
      OrderService orderService;
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Order createNewOrder(@RequestBody List<ItemRequest> itemRequestList) throws ServiceException {
+    @ResponseBody
+    public OrderDto createNewOrder(@RequestBody OrderDto orderDto) throws ServiceException {
 
-        return orderService.createNewOrder(itemRequestList);
+        return orderService.createNewOrder(orderDto);
 
     }
 
-    @PutMapping(value = "/update/{orderId}")
-    public Order updateOrder(@RequestBody List<ItemRequest> itemRequestList,
-                             @PathVariable Long orderId) throws ServiceException{
+//    @PutMapping(value = "/update/{orderId}")
+//    public Order updateOrder(@RequestBody List<ItemRequest> itemRequestList,
+//                             @PathVariable Long orderId) throws ServiceException{
+//
+//        return orderService.updateOrder(orderId, itemRequestList);
+//    }
 
-        return orderService.updateOrder(orderId, itemRequestList);
-    }
-
-    @PutMapping(value = "/remove-item/{orderId}")
-    public void removeOrderItems(@RequestBody List<ItemRequest> itemRequestList,
-                             @PathVariable Long orderId) throws ServiceException{
-
-         orderService.removeOrderItems(orderId,itemRequestList);
-    }
+//    @PutMapping(value = "/remove-item/{orderId}")
+//    public void removeOrderItems(@RequestBody List<ItemRequest> itemRequestList,
+//                             @PathVariable Long orderId) throws ServiceException{
+//
+//         orderService.removeOrderItems(orderId,itemRequestList);
+//    }
 
 
     @GetMapping(value = "/cancel/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

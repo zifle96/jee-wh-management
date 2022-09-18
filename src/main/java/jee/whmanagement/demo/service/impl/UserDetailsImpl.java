@@ -42,9 +42,9 @@ public class UserDetailsImpl implements UserDetails {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         for (Role role : user.getRole()) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
             role.getPrivilege().stream()
-                    .map(privilege -> new SimpleGrantedAuthority(privilege.getName()))
+                    .map(privilege -> new SimpleGrantedAuthority(privilege.getPrivilegeName()))
                     .forEach(authorities::add);
         }
         return new UserDetailsImpl(

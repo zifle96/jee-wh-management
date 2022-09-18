@@ -1,15 +1,13 @@
 package jee.whmanagement.demo.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "trucks")
 public class Truck {
@@ -19,12 +17,21 @@ public class Truck {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "chassis_number")
     private Integer chassisNumber;
+    @Column(name = "licence_plate")
     private Integer licencePlate;
 
-    @ManyToOne
-    @JoinColumn(name="order_id", nullable=false)
-    private Order order;
+    @OneToMany(mappedBy = "truck")
+    private Set<Order> order;
 
     private boolean available;
+
+    public Truck(Long id, Integer chassisNumber, Integer licencePlate, Set<Order> order, boolean available) {
+        this.id = id;
+        this.chassisNumber = chassisNumber;
+        this.licencePlate = licencePlate;
+        this.order = order;
+        this.available = available;
+    }
 }

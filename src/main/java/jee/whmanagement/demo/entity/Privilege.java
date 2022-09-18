@@ -1,8 +1,8 @@
 package jee.whmanagement.demo.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,17 +10,29 @@ import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@Table(name = "privilege")
 @Entity
 public class Privilege {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Column(name = "privilege_name")
+    private String privilegeName;
 
-    @ManyToOne
-    @JoinColumn(name="role_id", nullable=false)
-    private Role role;
+    @ManyToMany(mappedBy = "privilege")
+    private Set<Role> role;
 
+    public Privilege(Long id, String name) {
+        this.id = id;
+        this.privilegeName = name;
+    }
+
+    public Privilege(Long id, String privilegeName, Set<Role> role) {
+        this.id = id;
+        this.privilegeName = privilegeName;
+        this.role = role;
+    }
 }

@@ -56,7 +56,9 @@ public class SecurityConfig {
                 )
                 .and();
         http.authorizeHttpRequests((authorization) -> authorization
+                .antMatchers("/**").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/client-order/create").hasRole("CLIENT")
                 .anyRequest().authenticated()
         );
 
