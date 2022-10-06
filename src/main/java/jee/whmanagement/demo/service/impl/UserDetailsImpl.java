@@ -1,6 +1,7 @@
 package jee.whmanagement.demo.service.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jee.whmanagement.demo.entity.Privilege;
 import jee.whmanagement.demo.entity.Role;
 import jee.whmanagement.demo.entity.User;
 import lombok.Getter;
@@ -43,22 +44,51 @@ public class UserDetailsImpl implements UserDetails {
 
         for (Role role : user.getRole()) {
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-            role.getPrivilege().stream()
-                    .map(privilege -> new SimpleGrantedAuthority(privilege.getPrivilegeName()))
-                    .forEach(authorities::add);
+//            role.getPrivilege().stream()
+//                    .map(privilege -> new SimpleGrantedAuthority(privilege.getPrivilegeName()))
+//                    .forEach(authorities::add);
         }
         return new UserDetailsImpl(
                 user.getId(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities);
+                getAuthorities(user.getRole()));
     }
 
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//
+//        return authorities;
+//    }
+
+
+    private static Collection<? extends GrantedAuthority> getAuthorities(
+            Collection<Role> roles) {
+
+        return getGrantedAuthorities(getPrivileges(roles));
     }
+
+    private static List<String> getPrivileges(Collection<Role> roles) {
+
+        List<String> privileges = new ArrayList<>();
+        List<Privilege> collection = new ArrayList<>();
+        for (Role role : roles) {
+            privileges.add(role.getRoleName());
+            collection.addAll(role.getPrivilege());
+        }
+        for (Privilege item : collection) {
+            privileges.add(item.getPrivilegeName());
+        }
+        return privileges;
+    }
+
+    private static List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (String privilege : privileges) {
+            authorities.add(new SimpleGrantedAuthority(privilege));
+        }
+        return authorities;}
 
     @Override
     public String getUsername() {

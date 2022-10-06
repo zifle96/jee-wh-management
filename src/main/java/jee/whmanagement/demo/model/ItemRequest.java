@@ -6,7 +6,5 @@ import lombok.Data;
 public class ItemRequest {
 
     private Long itemId;
-    private String name;
-    private String description;
     private Integer requestedQuantity;
 }

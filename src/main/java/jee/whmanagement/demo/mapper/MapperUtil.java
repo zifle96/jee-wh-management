@@ -19,4 +19,8 @@ public class MapperUtil {
                 .map(element -> modelMapper.map(element, targetClass))
                 .collect(Collectors.toList());
     }
+
+    public static <D> D mapObject(Object source, Class<D> targetClass){
+        return modelMapper.map(source, targetClass);
+    }
 }

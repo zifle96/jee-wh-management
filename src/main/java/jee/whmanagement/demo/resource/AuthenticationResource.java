@@ -39,6 +39,7 @@ public class AuthenticationResource {
     @Autowired
     RefreshTokenService refreshTokenService;
 
+
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public LoginResponse createAuthenticationToken(@RequestBody LoginRequest loginRequest) throws Exception {
 

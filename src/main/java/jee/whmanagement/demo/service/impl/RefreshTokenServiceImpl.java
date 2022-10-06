@@ -1,7 +1,6 @@
 package jee.whmanagement.demo.service.impl;
 
 
-import jee.whmanagement.demo.TokenRefreshException;
 import jee.whmanagement.demo.entity.RefreshToken;
 import jee.whmanagement.demo.repository.RefreshTokenRepository;
 import jee.whmanagement.demo.repository.UserRepository;
@@ -14,6 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Optional;
 import java.util.UUID;
 

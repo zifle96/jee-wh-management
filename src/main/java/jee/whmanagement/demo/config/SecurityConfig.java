@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = false, securedEnabled = false, jsr250Enabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -59,6 +59,8 @@ public class SecurityConfig {
                 .antMatchers("/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/client-order/create").hasRole("CLIENT")
+                .antMatchers("manager/all-items").hasRole("WAREHOUSE_MANAGER")
+                .antMatchers("manager/items-create").hasRole("WAREHOUSE_MANAGER")
                 .anyRequest().authenticated()
         );
 

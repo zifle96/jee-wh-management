@@ -2,13 +2,8 @@ package jee.whmanagement.demo.security;
 
 
 import jee.whmanagement.demo.config.JwtTokenUtil;
-import jee.whmanagement.demo.entity.User;
-import jee.whmanagement.demo.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;

@@ -13,9 +13,9 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Modifying
-    @Query("UPDATE Order SET orderStatus = ?1 where user_id = ?2")
-    Order setOrderStatus(OrderStatus status, Long userId);
-    List<Order> findByUserIdAndOrderStatus(Long userId, OrderStatus orderStatus);
+    @Query("UPDATE Order SET order_status = ?1 where user_id = ?2 AND id = ?3")
+    void setOrderStatus(String status, Long userId, Long id);
+    List<Order> findByUserIdAndOrderStatus(Long userId, String orderStatus);
     List<Order> findAllByUserId(Long userId);
-    List<Order> findByOrderStatus(OrderStatus orderStatus);
+    List<Order> findByOrderStatus(String orderStatus);
 }

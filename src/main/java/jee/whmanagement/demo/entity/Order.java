@@ -1,18 +1,20 @@
 package jee.whmanagement.demo.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
 @Setter
+//@EqualsAndHashCode
 @NoArgsConstructor
 @Table(name = "orders")
 @Entity
@@ -24,24 +26,18 @@ public class Order {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name="user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="truck_id", referencedColumnName = "id",nullable=false)
+    @JoinColumn(name="truck_id", referencedColumnName = "id")
     private Truck truck;
 
     @Column(name = "order_status")
     private String orderStatus;
 
-
-    //@Column(nullable = false)
-    //@Cascade(org.hibernate.annotations.CascadeType.REPLICATE)
-//    @ManyToOne
-//    @JoinColumn(name="item_id", referencedColumnName = "id",nullable=false)
-//    private Item item;
-    @OneToMany(mappedBy = "order")
-    private Set<OrderItem> orderItem = new HashSet<OrderItem>();
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> orderItem = new HashSet<>();
 
     @Column(name = "deadline_date")
     private Timestamp deadlineDate;
@@ -59,5 +55,9 @@ public class Order {
         this.deadlineDate = deadlineDate;
         this.submittedDate = submittedDate;
         this.deliveredDate = deliveredDate;
+    }
+
+    public Order(Long id) {
+        this.id = id;
     }
 }

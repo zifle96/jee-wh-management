@@ -3,21 +3,20 @@ package jee.whmanagement.demo.model;
 
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class OrderItemDto {
 
-    private OrderDto order;
-    private ItemDto item;
+    private OrderItemIdDto orderItemIdDto;
     private Integer requestedQuantity;
 
-    public OrderItemDto(OrderDto order, ItemDto item, Integer requestedQuantity) {
-        this.order = order;
-        this.item = item;
+    public OrderItemDto(OrderItemIdDto orderItemIdDto, Integer requestedQuantity) {
+        this.orderItemIdDto = orderItemIdDto;
         this.requestedQuantity = requestedQuantity;
     }
 }

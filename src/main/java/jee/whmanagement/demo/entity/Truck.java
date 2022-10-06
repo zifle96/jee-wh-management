@@ -34,4 +34,8 @@ public class Truck {
         this.order = order;
         this.available = available;
     }
+
+    public Truck(Long id) {
+        this.id = id;
+    }
 }

@@ -6,7 +6,6 @@ import jee.whmanagement.demo.entity.Truck;
 import jee.whmanagement.demo.entity.User;
 import lombok.*;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -17,10 +16,10 @@ import java.util.Set;
 public class OrderDto {
 
     private Long id;
-    private User user;
-    private Truck truck;
+    private Long userId;
+    private Long truckId;
     private String orderStatus;
-    private Set<OrderItemDto> orderItemDto;
+    //private Set<OrderItemDto> orderItemDto;
     private Timestamp deadlineDate;
     private Timestamp submittedDate;
     private Timestamp deliveredDate;

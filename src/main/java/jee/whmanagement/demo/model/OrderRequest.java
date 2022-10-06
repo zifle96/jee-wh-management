@@ -10,5 +10,6 @@ import java.util.List;
 public class OrderRequest {
 
     private Long userId;
-    List<Long> itemRequestList;
+    private Long truckId;
+   List<ItemRequest> itemRequest;
 }

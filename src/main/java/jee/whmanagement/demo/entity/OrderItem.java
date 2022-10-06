@@ -1,39 +1,33 @@
 package jee.whmanagement.demo.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter
 @Setter
+@EqualsAndHashCode
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "order_item")
+@AssociationOverrides({
+        @AssociationOverride(name = "id.order",
+                joinColumns = @JoinColumn(name = "order_id")),
+        @AssociationOverride(name = "id.item",
+                joinColumns = @JoinColumn(name = "item_id")) })
 @Entity
 public class OrderItem {
 
+    @EmbeddedId
+    private OrderItemId id= new OrderItemId();
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
-
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
+//    @Transient
+//    private Order order;
+//
+//    @Transient
+//    private Item item;
 
     @Column(name = "requested_quantity")
     private Integer requestedQuantity;
 
-    public OrderItem(Long id, Order order, Item item, Integer requestedQuantity) {
-        this.id = id;
-        this.order = order;
-        this.item = item;
-        this.requestedQuantity = requestedQuantity;
-    }
 }
